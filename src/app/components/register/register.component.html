@@ -1,0 +1,150 @@
+<form [formGroup]="registerForm" (submit)="signUp()">
+  <h1>Sign Up</h1>
+  <hr />
+  <div class="mb-3">
+    <input
+      type="text"
+      class="form-control"
+      id="exampleInputname"
+      aria-describedby="nameHelp"
+      placeholder="Name"
+      formControlName="name"
+      autocomplete=""
+    />
+    <div
+      *ngIf="
+        registerForm.get('name')?.invalid && registerForm.get('name')?.touched
+      "
+      id="nameHelp"
+      class="form-text text-danger ms-1"
+    >
+      {{registerForm.get('name')?.errors?.['required']?'This field is required':'Maximum character limit:50'}}
+    </div>
+  </div>
+  <div class="mb-3">
+    <input
+      type="text"
+      class="form-control"
+      id="exampleInputsurname"
+      aria-describedby="surnameHelp"
+      placeholder="Surname"
+      formControlName="surname"
+    />
+    <div
+      *ngIf="
+        registerForm.get('surname')?.invalid &&
+        registerForm.get('surname')?.touched
+      "
+      id="surnameHelp"
+      class="form-text text-danger ms-1"
+    >
+      {{registerForm.get('surname')?.errors?.['required']?'This field is required':'Maximum character limit:50'}}
+    </div>
+  </div>
+  <div class="mb-3">
+    <input
+      type="number"
+      class="form-control"
+      id="exampleInputage"
+      aria-describedby="ageHelp"
+      placeholder="Age"
+      formControlName="age"
+      min="18"
+    />
+    <div
+      *ngIf="
+        registerForm.get('age')?.invalid && registerForm.get('age')?.touched
+      "
+      id="surnameHelp"
+      class="form-text text-danger ms-1"
+    >
+      {{registerForm.get('age')?.errors?.['required']?'This field is required':'Your age is out of limits'}}
+    </div>
+  </div>
+  <div class="mb-3">
+    <input
+      type="email"
+      class="form-control"
+      id="exampleInputEmail1"
+      aria-describedby="emailHelp"
+      placeholder="Email"
+      formControlName="email"
+    />
+    <div
+      *ngIf="
+        registerForm.get('email')?.touched && registerForm.get('email')?.invalid
+      "
+      id="emailHelp"
+      class="form-text text-danger ms-1"
+    >
+      Invalid email address
+    </div>
+    <div *ngIf="errorMessage" id="emailHelp" class="form-text text-danger ms-1">
+      {{ errorMessage }}
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
+    <input
+      type="password"
+      class="form-control"
+      id="inputPassword1"
+      aria-describedby="passwordHelp"
+      formControlName="password"
+      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+    />
+    <div
+      *ngIf="
+        registerForm.get('password')?.invalid &&
+        registerForm.get('password')?.touched
+      "
+      id="passwordHelp"
+      class="form-text text-danger ms-1"
+    >
+      <p>Password should contains at least</p>
+      <p>- 8 characters</p>
+      <p>- one upper letter</p>
+      <p>- one lower letter</p>
+      <p>- one number</p>
+      <p>- one special character (.,*%&+) etc</p>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="inputPassword2" class="form-label">Password</label>
+    <input
+      type="password"
+      class="form-control"
+      id="inputPassword2"
+      aria-describedby="passwordHelp2"
+      formControlName="repassword"
+    />
+    <div
+      *ngIf="
+        registerForm.get('repassword')?.touched &&
+        registerForm.get('repassword')?.invalid
+      "
+      id="passwordHelp2"
+      class="form-text text-danger ms-1"
+    >
+      Passwords doesn't match
+    </div>
+  </div>
+  <button
+    [disabled]="loading || registerForm.invalid"
+    type="submit"
+    class="btn btn-primary float-end"
+  >
+    <span
+      *ngIf="loading"
+      class="spinner-border spinner-border-sm"
+      role="status"
+      aria-hidden="true"
+    ></span
+    ><span class="ms-1">Sign Up</span>
+  </button>
+  <div class="pointer" [routerLink]="['/login']">
+    <p class="float-end text-primary mt-3 d-block">
+      Do you already have an account?
+    </p>
+  </div>
+</form>

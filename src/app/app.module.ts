@@ -1,28 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthComponent } from './auth/auth.component';
-import { HttpClientModule} from '@angular/common/http'
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
-import { HomeComponent } from './home/home.component';
-
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { LoadingInterceptor } from './interceptors/loading.interceptor';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AuthComponent,
-    HomeComponent
+  declarations: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true,
+    },
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
