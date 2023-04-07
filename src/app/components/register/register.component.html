@@ -84,13 +84,13 @@
     </div>
   </div>
   <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
     <input
       type="password"
       class="form-control"
       id="inputPassword1"
       aria-describedby="passwordHelp"
       formControlName="password"
+      placeholder="password"
       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
     />
     <div
@@ -110,13 +110,13 @@
     </div>
   </div>
   <div class="mb-3">
-    <label for="inputPassword2" class="form-label">Password</label>
     <input
       type="password"
       class="form-control"
       id="inputPassword2"
       aria-describedby="passwordHelp2"
       formControlName="repassword"
+      placeholder="retype password"
     />
     <div
       *ngIf="

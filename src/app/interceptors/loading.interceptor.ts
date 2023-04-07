@@ -5,7 +5,7 @@ import {
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
-import { BehaviorSubject, Observable, catchError, map } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { LoadingService } from '../services/loading/loading.service';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class LoadingInterceptor implements HttpInterceptor {
         catchError((err) => {
           this.loadingService.errorSub.next(err.error);
           this.loadingService.loadingSub.next(false);
-          return err;
+          return throwError(err);
         })
       )
       .pipe(

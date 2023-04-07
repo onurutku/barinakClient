@@ -23,7 +23,7 @@ export class HttpService {
   get<T>(url: string, params?: any): Observable<T> {
     let httpParams = new HttpParams();
     if (params) {
-      Object.keys(params).forEach(function (key) {
+      Object.keys(params).forEach((key) => {
         httpParams = httpParams.append(key, params[key]);
       });
     }

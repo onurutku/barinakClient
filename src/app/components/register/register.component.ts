@@ -60,6 +60,7 @@ export class RegisterComponent extends Destroyer implements OnInit {
       .pipe(takeUntil(this.$destroyer))
       .subscribe((registerResponse: User) => {
         if (registerResponse) {
+          this.authService.sendEmailVerification(register.email).subscribe();
           this.router.navigate(['/login']);
         }
       });
