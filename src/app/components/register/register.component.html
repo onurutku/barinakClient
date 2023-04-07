@@ -128,6 +128,13 @@
     >
       Passwords doesn't match
     </div>
+    <div
+      *ngIf="verificationMessage"
+      id="passwordHelp2"
+      class="form-text text-success ms-1"
+    >
+      <i class="fa-regular fa-shield-check"></i> {{ verificationMessage }}
+    </div>
   </div>
   <button
     [disabled]="loading || registerForm.invalid"

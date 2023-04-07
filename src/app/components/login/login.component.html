@@ -18,6 +18,9 @@
     >
       Invalid email address
     </div>
+    <div *ngIf="errorMessage" id="emailHelp" class="form-text text-danger ms-1">
+      {{ errorMessage }}
+    </div>
   </div>
   <div class="mb-3">
     <input

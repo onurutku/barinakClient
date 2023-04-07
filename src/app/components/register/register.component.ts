@@ -25,6 +25,7 @@ import passwordMatch from './../../validators/password.validator';
 export class RegisterComponent extends Destroyer implements OnInit {
   registerForm!: FormGroup;
   errorMessage!: string;
+  verificationMessage!: string;
   loading = false;
   constructor(
     private readonly fb: FormBuilder,
@@ -60,8 +61,13 @@ export class RegisterComponent extends Destroyer implements OnInit {
       .pipe(takeUntil(this.$destroyer))
       .subscribe((registerResponse: User) => {
         if (registerResponse) {
-          this.authService.sendEmailVerification(register.email).subscribe();
-          this.router.navigate(['/login']);
+          this.authService
+            .sendEmailVerification(register.email)
+            .pipe(takeUntil(this.$destroyer))
+            .subscribe(() => {
+              this.verificationMessage =
+                'A verification mail has been sent, please check your mailbox';
+            });
         }
       });
   }

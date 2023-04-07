@@ -24,6 +24,8 @@ import { LoadingService } from 'src/app/services/loading/loading.service';
 export class LoginComponent extends Destroyer implements OnInit {
   loginForm!: FormGroup;
   loading = false;
+  errorMessage!: string;
+
   constructor(
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,
@@ -35,6 +37,7 @@ export class LoginComponent extends Destroyer implements OnInit {
 
   ngOnInit(): void {
     this.checkLoading();
+    this.errorCatcher();
     this.loginForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
       password: [null, Validators.required],
@@ -54,6 +57,13 @@ export class LoginComponent extends Destroyer implements OnInit {
       .pipe(takeUntil(this.$destroyer))
       .subscribe((isLoading: boolean) => {
         this.loading = isLoading;
+      });
+  }
+  errorCatcher() {
+    this.loadingService.errorSub
+      .pipe(takeUntil(this.$destroyer))
+      .subscribe((error: { statusCode: number; message: string }) => {
+        this.errorMessage = error.message;
       });
   }
 }
