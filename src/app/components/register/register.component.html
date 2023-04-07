@@ -131,26 +131,29 @@
     <div
       *ngIf="verificationMessage"
       id="passwordHelp2"
-      class="form-text text-success ms-1"
+      class="form-text text-success ms-1 mt-2"
     >
-      <i class="fa-regular fa-shield-check"></i> {{ verificationMessage }}
+      {{ verificationMessage }}
     </div>
   </div>
-  <button
-    [disabled]="loading || registerForm.invalid"
-    type="submit"
-    class="btn btn-primary float-end"
-  >
-    <span
-      *ngIf="loading"
-      class="spinner-border spinner-border-sm"
-      role="status"
-      aria-hidden="true"
-    ></span
-    ><span class="ms-1">Sign Up</span>
-  </button>
-  <div class="pointer" [routerLink]="['/login']">
-    <p class="float-end text-primary mt-3 d-block">
+  <div class="d-flex justify-content-end align-items-end flex-column">
+    <button
+      [disabled]="loading || registerForm.invalid"
+      type="submit"
+      class="btn btn-primary float-end"
+    >
+      <span
+        *ngIf="loading"
+        class="spinner-border spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span
+      ><span class="ms-1">Sign Up</span>
+    </button>
+    <p
+      class="float-end text-primary mt-3 d-block pointer"
+      [routerLink]="['/login']"
+    >
       Do you already have an account?
     </p>
   </div>
