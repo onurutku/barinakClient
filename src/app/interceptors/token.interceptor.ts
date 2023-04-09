@@ -23,11 +23,11 @@ export class TokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     const user: User | null = this.authService.userValue;
+
     if (user) {
-      const modifiedRequest = request.clone({
-        headers: request.headers.set('Bearer', user?.access_token!),
+      request = request.clone({
+        setHeaders: { Authorization: `Bearer ${user?.access_token}` },
       });
-      return next.handle(modifiedRequest);
     }
     return next.handle(request).pipe(
       catchError((err) => {
