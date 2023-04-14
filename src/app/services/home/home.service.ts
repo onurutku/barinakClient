@@ -3,15 +3,19 @@ import { HttpService } from '../base/http.service';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { Destroyer } from 'src/app/helpers/subscription_destroyer';
+import jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HomeService extends Destroyer {
   $profileInfo: Subject<User> = new Subject<User>();
+  userId: any = jwt_decode(
+    JSON.parse(sessionStorage.getItem('user')!!).access_token
+  );
   constructor(private readonly baseHttpService: HttpService) {
     super();
-    this.getProfile(JSON.parse(localStorage.getItem('user')!!).id);
+    this.getProfile(this.userId.sub);
   }
   getProfile(id: string) {
     this.baseHttpService

@@ -48,7 +48,9 @@ export class LoginComponent extends Destroyer implements OnInit {
       .login(this.loginForm.value)
       .pipe(takeUntil(this.$destroyer))
       .subscribe((userLoggedIn: User) => {
-        localStorage.setItem('user', JSON.stringify(userLoggedIn));
+        sessionStorage.setItem('user', JSON.stringify(userLoggedIn));
+        console.log(userLoggedIn);
+
         this.router.navigate(['']);
       });
   }

@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (JSON.parse(localStorage.getItem('user')!!)) {
+    if (JSON.parse(sessionStorage.getItem('user')!!)) {
       return true;
     } else {
       this.router.navigate(['/login']);

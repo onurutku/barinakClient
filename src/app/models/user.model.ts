@@ -5,6 +5,7 @@ export class User {
     public age: string | number,
     public email: string,
     public id?: string,
-    public access_token?: string
+    public access_token?: string,
+    public refresh_token?: string
   ) {}
 }

@@ -8,10 +8,10 @@ import Login from 'src/app/models/login.model';
   providedIn: 'root',
 })
 export class AuthService {
-  private userSubject: BehaviorSubject<User>;
+  userSubject: BehaviorSubject<User>;
 
   constructor(private baseHttpService: HttpService) {
-    const userLoggedIn = JSON.parse(localStorage.getItem('user')!!);
+    const userLoggedIn = JSON.parse(sessionStorage.getItem('user')!!);
     this.userSubject = new BehaviorSubject<User>(userLoggedIn);
   }
   login(user: Login, params?: unknown): Observable<User> {
@@ -34,5 +34,8 @@ export class AuthService {
   }
   public get userValue(): User | null {
     return this.userSubject.value;
+  }
+  getRefreshToken() {
+    return this.baseHttpService.post('auth/refresh', {});
   }
 }
