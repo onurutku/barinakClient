@@ -38,6 +38,9 @@ export class LoginComponent extends Destroyer implements OnInit {
   ngOnInit(): void {
     this.checkLoading();
     this.errorCatcher();
+    this.createForm();
+  }
+  createForm() {
     this.loginForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
       password: [null, Validators.required],

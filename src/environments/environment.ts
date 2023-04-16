@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   baseURL: 'https://barinak.herokuapp.com/',
+  devBaseURL: 'http://localhost:3000/',
 };
 
 /*

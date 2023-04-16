@@ -4,6 +4,7 @@ import { HttpService } from '../base/http.service';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import Login from 'src/app/models/login.model';
 import PasswordReset from 'src/app/models/passwordReset.model';
+import BackendMessage from 'src/app/models/backendMessages.model';
 
 @Injectable({
   providedIn: 'root',
@@ -39,14 +40,14 @@ export class AuthService {
   getRefreshToken() {
     return this.baseHttpService.post('auth/refresh', {});
   }
-  sendPasswordResetMail(email: string) {
-    return this.baseHttpService.post<string>(
+  sendPasswordResetMail(email: { email: string }): Observable<BackendMessage> {
+    return this.baseHttpService.post<BackendMessage>(
       'auth/password-reset-email',
       email
     );
   }
-  resetPassword(passwordResetInfo: PasswordReset) {
-    return this.baseHttpService.post<string>(
+  resetPassword(passwordResetInfo: PasswordReset): Observable<BackendMessage> {
+    return this.baseHttpService.post<BackendMessage>(
       'auth/reset-password',
       passwordResetInfo
     );

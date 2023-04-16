@@ -10,6 +10,7 @@ import {
 import { RouterModule } from '@angular/router';
 import { takeUntil } from 'rxjs';
 import { Destroyer } from 'src/app/helpers/subscription_destroyer';
+import BackendMessage from 'src/app/models/backendMessages.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
 
@@ -35,6 +36,11 @@ export class ForgotPasswordComponent extends Destroyer implements OnInit {
   }
 
   ngOnInit(): void {
+    this.createForm();
+    this.checkLoading();
+    this.errorCatcher();
+  }
+  createForm() {
     this.forgotPassEmail = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
     });
@@ -43,8 +49,8 @@ export class ForgotPasswordComponent extends Destroyer implements OnInit {
     this.authService
       .sendPasswordResetMail(this.forgotPassEmail.value)
       .pipe(takeUntil(this.$destroyer))
-      .subscribe((response: string) => {
-        this.passwordResetMessage = response;
+      .subscribe((response: BackendMessage) => {
+        this.passwordResetMessage = response.message;
       });
   }
   checkLoading(): void {

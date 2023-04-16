@@ -7,9 +7,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { takeUntil } from 'rxjs';
 import { Destroyer } from 'src/app/helpers/subscription_destroyer';
+import BackendMessage from 'src/app/models/backendMessages.model';
 import PasswordReset from 'src/app/models/passwordReset.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
@@ -27,11 +28,13 @@ export class ResetPasswordComponent extends Destroyer implements OnInit {
   backendMessage!: string;
   loading = false;
   userId!: string;
+  errorMessage!: string;
   constructor(
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,
     private readonly loadingService: LoadingService,
-    private route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly router: Router
   ) {
     super();
   }
@@ -39,6 +42,8 @@ export class ResetPasswordComponent extends Destroyer implements OnInit {
   ngOnInit(): void {
     this.createForm();
     this.getIdFromURL();
+    this.checkLoading();
+    this.errorCatcher();
   }
   createForm() {
     this.passwordsForm = this.fb.group({
@@ -59,8 +64,9 @@ export class ResetPasswordComponent extends Destroyer implements OnInit {
     this.authService
       .resetPassword(passwordResetInfo)
       .pipe(takeUntil(this.$destroyer))
-      .subscribe((response) => {
-        this.backendMessage = response;
+      .subscribe((response: BackendMessage) => {
+        this.backendMessage = response.message;
+        this.router.navigate(['/login']);
       });
   }
   checkLoading(): void {
@@ -68,6 +74,13 @@ export class ResetPasswordComponent extends Destroyer implements OnInit {
       .pipe(takeUntil(this.$destroyer))
       .subscribe((isLoading: boolean) => {
         this.loading = isLoading;
+      });
+  }
+  errorCatcher() {
+    this.loadingService.errorSub
+      .pipe(takeUntil(this.$destroyer))
+      .subscribe((error: { statusCode: number; message: string }) => {
+        this.errorMessage = error.message;
       });
   }
 }

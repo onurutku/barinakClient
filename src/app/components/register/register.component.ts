@@ -38,6 +38,9 @@ export class RegisterComponent extends Destroyer implements OnInit {
   ngOnInit(): void {
     this.errorCatcher();
     this.checkLoading();
+    this.createForm();
+  }
+  createForm() {
     this.registerForm = this.fb.group({
       name: [null, [Validators.required, Validators.maxLength(50)]],
       surname: [null, [Validators.required, Validators.maxLength(50)]],

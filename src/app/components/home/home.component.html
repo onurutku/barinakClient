@@ -1,5 +1,9 @@
-<p>ID: {{ ($user | async)?.id }}</p>
-<p>Name: {{ ($user | async)?.name }}</p>
-<p>Surname: {{ ($user | async)?.surname }}</p>
-<p>Age: {{ ($user | async)?.age }}</p>
-<p>Email: {{ ($user | async)?.email }}</p>
+<div class="container d-flex justify-content-center align-items-center h-100">
+  <div>
+    <p>ID: {{ ($user | async)?.id }}</p>
+    <p>Name: {{ ($user | async)?.name }}</p>
+    <p>Surname: {{ ($user | async)?.surname }}</p>
+    <p>Age: {{ ($user | async)?.age }}</p>
+    <p>Email: {{ ($user | async)?.email }}</p>
+  </div>
+</div>

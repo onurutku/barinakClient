@@ -7,7 +7,8 @@ import { environment } from './../../../environments/environment';
   providedIn: 'root',
 })
 export class HttpService {
-  baseURL = environment.baseURL;
+  // baseURL = environment.baseURL;
+  baseURL = environment.devBaseURL;
   constructor(private readonly http: HttpClient) {}
   post<T>(url: string, body: unknown, params?: any): Observable<T> {
     let httpParams = new HttpParams();
