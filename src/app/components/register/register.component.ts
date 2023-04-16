@@ -30,8 +30,7 @@ export class RegisterComponent extends Destroyer implements OnInit {
   constructor(
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,
-    private readonly loadingService: LoadingService,
-    private readonly router: Router
+    private readonly loadingService: LoadingService
   ) {
     super();
   }
@@ -61,14 +60,17 @@ export class RegisterComponent extends Destroyer implements OnInit {
       .pipe(takeUntil(this.$destroyer))
       .subscribe((registerResponse: User) => {
         if (registerResponse) {
-          this.authService
-            .sendEmailVerification(register.email)
-            .pipe(takeUntil(this.$destroyer))
-            .subscribe(() => {
-              this.verificationMessage =
-                'A verification mail has been sent, please check your mailbox';
-            });
+          this.sendEmailVerificationMail(register);
         }
+      });
+  }
+  sendEmailVerificationMail(registerInfo: any) {
+    return this.authService
+      .sendEmailVerification(registerInfo.email)
+      .pipe(takeUntil(this.$destroyer))
+      .subscribe(() => {
+        this.verificationMessage =
+          'A verification mail has been sent, please check your mailbox';
       });
   }
   errorCatcher() {

@@ -3,6 +3,7 @@ import { User } from 'src/app/models/user.model';
 import { HttpService } from '../base/http.service';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import Login from 'src/app/models/login.model';
+import PasswordReset from 'src/app/models/passwordReset.model';
 
 @Injectable({
   providedIn: 'root',
@@ -37,5 +38,17 @@ export class AuthService {
   }
   getRefreshToken() {
     return this.baseHttpService.post('auth/refresh', {});
+  }
+  sendPasswordResetMail(email: string) {
+    return this.baseHttpService.post<string>(
+      'auth/password-reset-email',
+      email
+    );
+  }
+  resetPassword(passwordResetInfo: PasswordReset) {
+    return this.baseHttpService.post<string>(
+      'auth/reset-password',
+      passwordResetInfo
+    );
   }
 }
