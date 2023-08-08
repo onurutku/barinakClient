@@ -5,5 +5,15 @@
     <p>Surname: {{ ($user | async)?.surname }}</p>
     <p>Age: {{ ($user | async)?.age }}</p>
     <p>Email: {{ ($user | async)?.email }}</p>
+    <!-- <img
+      style="width: 100px; height: auto"
+      [src]="($user | async)?.profilePicture"
+      alt="pp"
+    /> -->
+    <img
+      style="width: 100px; height: auto"
+      [src]="['data:image/png;base64', ($user | async)?.profilePicture]"
+    />
   </div>
 </div>
+<input (change)="onChange($event)" type="file" />

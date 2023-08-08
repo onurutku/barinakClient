@@ -1,3 +1,5 @@
+import { SafeUrl } from '@angular/platform-browser';
+
 export class User {
   constructor(
     public name: string,
@@ -6,6 +8,7 @@ export class User {
     public email: string,
     public id?: string,
     public access_token?: string,
-    public refresh_token?: string
+    public refresh_token?: string,
+    public profilePicture?: any
   ) {}
 }

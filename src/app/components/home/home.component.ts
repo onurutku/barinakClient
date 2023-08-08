@@ -13,10 +13,15 @@ import { HomeService } from 'src/app/services/home/home.service';
   imports: [CommonModule],
 })
 export class HomeComponent extends Destroyer implements OnInit {
-  $user!: Observable<User>;
+  $user!: Observable<User | null>;
   constructor(private readonly homeService: HomeService) {
     super();
     this.$user = this.homeService.profileInfo;
   }
   ngOnInit(): void {}
+  onChange(e: any) {
+    const formData = new FormData();
+    formData.append('file', e.target.files[0], e.target.files[0].name);
+    this.homeService.sendFile(formData);
+  }
 }
